@@ -107,12 +107,14 @@ def parse_while(el):
     res_code.append(result)
     address_instr_mem += 1
 
-    for i in range(len(body)-1, 0, -1):
+    for i in range(len(body)-1, -1, -1):
         match body[i][0]:
             case 'setq':
                 parse_setq(body[i])
             case 'if':
                 parse_if(body[i])
+            case 'print':
+                var_out(body[i][1])
 
     add_load_instr('rx15', start_addr_while)
     add_jmp_instr()
@@ -124,32 +126,42 @@ def var_out(var_name):
     global address_instr_mem
     for var in address2var:
         if var['name'] == var_name[0]:
-            add_load_instr('rx2', var['addr'])
-            reg_data = 'rx' + str(reg_counter)
-            first_point = address_instr_mem
-            add_load_instr('rx15', address_instr_mem + 7)
-            add_load_instr(reg_data, 'rx2')
-            res_code.append({'opcode': 'je', 'arg1': reg_data, 'arg2': 'rx0'})
-            address_instr_mem += 1
-            change_data_reg()
-            res_code.append({'opcode': 'print', 'arg1': reg_data, 'arg2': 1})
-            address_instr_mem += 1
-            res_code.append({'opcode': 'inc', 'arg1': 'rx2'})
-            address_instr_mem += 1
-            add_load_instr('rx15', first_point)
-            res_code.append({'opcode': 'jmp'})
-            address_instr_mem += 1
-            change_data_reg()
-            break
-def alloc_var(name):
+            if var['type'] == 'string':
+                add_load_instr('rx2', var['addr'])
+                reg_data = 'rx' + str(reg_counter)
+                first_point = address_instr_mem
+                add_load_instr('rx15', address_instr_mem + 7)
+                add_load_instr(reg_data, 'rx2')
+                res_code.append({'opcode': 'je', 'arg1': reg_data, 'arg2': 'rx0'})
+                address_instr_mem += 1
+                change_data_reg()
+                res_code.append({'opcode': 'print', 'arg1': reg_data, 'arg2': 1})
+                address_instr_mem += 1
+                res_code.append({'opcode': 'inc', 'arg1': 'rx2'})
+                address_instr_mem += 1
+                add_load_instr('rx15', first_point)
+                res_code.append({'opcode': 'jmp'})
+                address_instr_mem += 1
+                change_data_reg()
+                break
+            else:
+                add_load_instr('rx2', var['addr'])
+                reg_data = 'rx' + str(reg_counter)
+                change_data_reg()
+                add_load_instr(reg_data, 'rx2')
+                res_code.append({'opcode': 'print', 'arg1': reg_data, 'arg2': 0})
+                address_instr_mem += 1
+
+def alloc_var(name, type = 'string'):
     global address_data_mem
     variables.add(name)
     var = {
         'addr': address_data_mem,
-        'name': name
+        'name': name,
+        'type': type
     }
     address2var.append(var)
-    address_data_mem += 1
+    address_data_mem += 2
 
 def check_args(arg):
     operator = arg.operator
@@ -242,14 +254,12 @@ def parse_setq(el):
     reg_name = "rx" + str(reg_counter)
     var = el[1][1]
 
-    if isinstance(el[1][1], str) or isinstance(el[1][1], int):
-        if isinstance(el[1][1], int):
-            var = str(var)
+    if isinstance(el[1][1], str):
         if var[0] == '\"' and var[len(var) - 1] == '\"':
             if var[0] == "\"\"":
                 add_load_instr('rx' + str(reg_counter), 0)
                 change_data_reg()
-                alloc_var(name)
+                alloc_var(name, 'string')
                 addr = get_var_addr_in_mem(name)
                 add_wr_instr('rx' + str(get_prev_data_reg()))
 
@@ -263,12 +273,12 @@ def parse_setq(el):
                     ch_in_ord = ord(var[ch])
                     add_load_instr('rx' + str(reg_counter), ch_in_ord)
                     change_data_reg()
-                    alloc_var(name)
+                    alloc_var(name, 'string')
                     addr = get_var_addr_in_mem(name)
                     add_wr_instr('rx' + str(get_prev_data_reg()))
         elif el[1][1] in variables:
             if not el[1][0] in variables:
-                alloc_var(name)
+                alloc_var(name, 'string')
             addr = get_var_addr_in_mem(var)
             add_load_instr('rx2', addr)
             add_load_instr('rx' + str(reg_counter), 'rx2')
@@ -278,29 +288,39 @@ def parse_setq(el):
             add_load_instr('rx2', addr)
             add_wr_instr(get_prev_data_reg())
 
-        elif isinstance(el[1][1], int):
-            if not el[1][0] in variables:
-                alloc_var(name)
-            addr = get_var_addr_in_mem(name)
-            add_load_instr('rx2', addr)
-            add_load_instr('rx' + str(reg_counter), el[1][1])
-            change_data_reg()
-            add_wr_instr('rx' + str(get_prev_data_reg()))
-
         add_load_instr('rx' + str(reg_counter), 0x0)
         change_data_reg()
-        alloc_var(name)
+        alloc_var(name, 'string')
         add_wr_instr('rx' + str(get_prev_data_reg()))
         return
+
+    elif isinstance(el[1][1], int):
+        if not el[1][0] in variables:
+            alloc_var(name, 'int')
+        addr = get_var_addr_in_mem(name)
+        add_load_instr('rx2', addr)
+        add_load_instr('rx' + str(reg_counter), var)
+        change_data_reg()
+        add_wr_instr('rx' + str(get_prev_data_reg()))
+
     elif isinstance(var, list):
         if var[0] == 'read':
-            alloc_var(name)
+            alloc_var(name, 'string')
             addr = get_var_addr_in_mem(name)
             add_load_instr('rx2', addr)
             parse_read()
             add_wr_instr('rx0')
         elif var[0] == 'if':
             parse_if(var)
+        elif var[0] in math_variables:
+            reg = parse_math_method(var)
+            addr = get_var_addr_in_mem(name)
+            add_load_instr('rx2', addr)
+            add_wr_instr('rx' + str(reg))
+            res_code.append({'opcode': 'inc', 'arg1': 'rx2'})
+            address_instr_mem += 1
+            add_wr_instr('rx0')
+
         elif var[0] in variables_method:
             start_addr_method = get_start_addr_method(var[0])
             args_method = get_args_method(var[0])
@@ -403,7 +423,7 @@ def parse_def(el):
         method_args.append(el[1][i])
     method_body = el[1][-1]
     for i in range(0, len(method_args)):
-        alloc_var(method_args[i])
+        alloc_var(method_args[i], 'int')
 
     jmp_instr_addr = address_instr_mem
     add_load_instr("rx15", 0)
@@ -638,10 +658,17 @@ def parse_condition(args):
     if isinstance(args[1], int):
         add_load_instr('rx' + str(reg_counter), args[1])
     elif args[1][0] == 'setq':
-        addr = get_var_addr_in_mem(args[1][1][0])
-
-        add_load_instr('rx2', addr)
-        add_load_instr('rx' + str(reg_counter), 'rx2')
+        if isinstance(args[1][1][1], int):
+            addr = get_var_addr_in_mem(args[1][1][0])
+            add_load_instr('rx2', addr)
+            add_load_instr('rx' + str(reg_counter), args[1][1][1])
+            add_wr_instr('rx' + str(reg_counter))
+            change_data_reg()
+        else:
+            reg = parse_math_method(args[1][1][1])
+            addr = get_var_addr_in_mem(args[1][1][0])
+            add_load_instr('rx2', addr)
+            add_wr_instr('rx' + str(reg))
     elif args[1][0] == 'print':
         var_out(args[1][1][0])
 
@@ -653,9 +680,17 @@ def parse_condition(args):
     if isinstance(args[2], int):
         add_load_instr('rx' + str(reg_counter), args[2])
     elif args[2][0] == 'setq':
-        addr = get_var_addr_in_mem(args[2][1][0])
-        add_load_instr('rx2', addr)
-        add_load_instr('rx' + str(reg_counter), 'rx2')
+        if isinstance(args[2][1][1], int):
+            addr = get_var_addr_in_mem(args[2][1][0])
+            add_load_instr('rx2', addr)
+            add_load_instr('rx' + str(reg_counter), args[2][1][1])
+            add_wr_instr('rx' + str(reg_counter))
+            change_data_reg()
+        else:
+            reg = parse_math_method(args[2][1][1])
+            addr = get_var_addr_in_mem(args[2][1][0])
+            add_load_instr('rx2', addr)
+            add_wr_instr('rx' + str(reg))
     elif args[2][0] == 'print':
         var_out(args[2][1][0])
 
