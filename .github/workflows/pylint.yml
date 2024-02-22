@@ -25,3 +25,4 @@ jobs:
         pytest integration_tests.py::test_cat_program
         pytest integration_tests.py::test_hello_program
         pytest integration_tests.py::test_hello_user_program
+        pytest integration_tests.py::test_prob5_program

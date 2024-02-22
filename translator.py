@@ -503,10 +503,10 @@ def parse_math_method(el):
             result.update({'opcode': 'sub'})
         case '/':
             result.update({'opcode': 'div'})
-            return 13
+            rx_var_left = 13
         case '%':
             result.update({'opcode': 'div'})
-            return 14
+            rx_var_left = 14
         case '*':
             result.update({'opcode': 'mul'})
 
