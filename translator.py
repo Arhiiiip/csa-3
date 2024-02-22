@@ -107,12 +107,12 @@ def parse_while(el):
     res_code.append(result)
     address_instr_mem += 1
 
-    for i in body:
-        match i[0]:
+    for i in range(len(body)-1, 0, -1):
+        match body[i][0]:
             case 'setq':
-                parse_setq(i)
+                parse_setq(body[i])
             case 'if':
-                parse_if(i)
+                parse_if(body[i])
 
     add_load_instr('rx15', start_addr_while)
     add_jmp_instr()
@@ -524,8 +524,8 @@ def parse_condition(args):
     }
 
     operation = args[0][0]
-    left = args[1]
-    right = args[2]
+    left = args[0][1][0]
+    right = args[0][1][1]
 
     if not isinstance(left, int) and len(left) > 1:
         if left[0] in variables_method:
@@ -639,10 +639,14 @@ def parse_condition(args):
         add_load_instr('rx' + str(reg_counter), args[1])
     elif args[1][0] == 'setq':
         addr = get_var_addr_in_mem(args[1][1][0])
+
         add_load_instr('rx2', addr)
         add_load_instr('rx' + str(reg_counter), 'rx2')
+    elif args[1][0] == 'print':
+        var_out(args[1][1][0])
 
-    add_load_instr('rx15', address_instr_mem + 3)
+    false_jmp_addr = address_instr_mem
+    add_load_instr('rx15', address_instr_mem)
     add_jmp_instr()
 
     res_code[true_jmp_addr].update({'arg2': address_instr_mem})
@@ -652,7 +656,12 @@ def parse_condition(args):
         addr = get_var_addr_in_mem(args[2][1][0])
         add_load_instr('rx2', addr)
         add_load_instr('rx' + str(reg_counter), 'rx2')
+    elif args[2][0] == 'print':
+        var_out(args[2][1][0])
+
     change_data_reg()
+    res_code[false_jmp_addr].update({'arg2': address_instr_mem})
+
 def parse_read():
     global address_instr_mem
     res_code.append({'opcode': 'input'})

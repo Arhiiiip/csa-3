@@ -1,1 +1,1 @@
-    (setq n 2520) (setq i 20) (while (> i 0) (if (= (% n i) 0) (setq i (- i 1)) (setq x 0))(if (!= (% n i) 0) (setq n (+ n 2520)) (setq x 0))(if (!= (% n i) 0) (setq i 20) (setq x 0)) (if (= i 1) (print n) (setq x 0)))
+(setq n 2520) (setq i 20) (setq x 0) (while (> i 0) (if (= (% n i) 0) (setq i (- i 1)) (setq x 0))(if (!= (% n i) 0) (setq n (+ n 2520)) (setq x 0))(if (!= (% n i) 0) (setq i 20) (setq x 0)) (if (= i 1) (print n) (setq x 0)))
