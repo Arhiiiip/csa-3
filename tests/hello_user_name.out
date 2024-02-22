@@ -210,7 +210,7 @@
     {
         "opcode": "ld",
         "arg1": "rx2",
-        "arg2": 19
+        "arg2": 38
     },
     {
         "opcode": "input"
@@ -263,7 +263,7 @@
     {
         "opcode": "ld",
         "arg1": "rx2",
-        "arg2": 19
+        "arg2": 38
     },
     {
         "opcode": "ld",
