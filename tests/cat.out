@@ -1,0 +1,95 @@
+[
+    {
+        "opcode": "ld",
+        "arg1": "rx2",
+        "arg2": 0
+    },
+    {
+        "opcode": "input"
+    },
+    {
+        "opcode": "ld",
+        "arg1": "rx15",
+        "arg2": 1
+    },
+    {
+        "opcode": "dec",
+        "arg1": "rx2"
+    },
+    {
+        "opcode": "ld",
+        "arg1": "rx3",
+        "arg2": "rx2"
+    },
+    {
+        "opcode": "inc",
+        "arg1": "rx2"
+    },
+    {
+        "opcode": "ld",
+        "arg1": "rx4",
+        "arg2": 34
+    },
+    {
+        "opcode": "jne",
+        "arg1": "rx3",
+        "arg2": "rx4"
+    },
+    {
+        "opcode": "dec",
+        "arg1": "rx2"
+    },
+    {
+        "opcode": "ld",
+        "arg1": "rx5",
+        "arg2": 0
+    },
+    {
+        "opcode": "wr",
+        "arg1": "rx5"
+    },
+    {
+        "opcode": "wr",
+        "arg1": "rx0"
+    },
+    {
+        "opcode": "ld",
+        "arg1": "rx2",
+        "arg2": 0
+    },
+    {
+        "opcode": "ld",
+        "arg1": "rx15",
+        "arg2": 20
+    },
+    {
+        "opcode": "ld",
+        "arg1": "rx6",
+        "arg2": "rx2"
+    },
+    {
+        "opcode": "je",
+        "arg1": "rx6",
+        "arg2": "rx0"
+    },
+    {
+        "opcode": "print",
+        "arg1": "rx6",
+        "arg2": 1
+    },
+    {
+        "opcode": "inc",
+        "arg1": "rx2"
+    },
+    {
+        "opcode": "ld",
+        "arg1": "rx15",
+        "arg2": 13
+    },
+    {
+        "opcode": "jmp"
+    },
+    {
+        "opcode": "halt"
+    }
+]
