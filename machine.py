@@ -127,7 +127,7 @@ class ControlUnit:
 
     def tick(self):
         self._tick += 1
-        logging.debug(repr(self))
+        # logging.debug(repr(self))
 
     def get_current_tick(self):
         return self._tick
