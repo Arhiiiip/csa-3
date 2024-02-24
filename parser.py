@@ -18,7 +18,6 @@ class SymbolicExpression:
 
 
 def is_num(word):
-    """Проверка на то, что поданный аргумент число"""
     return word.isnumeric()
 
 
@@ -97,12 +96,10 @@ def convert_list_to_s_expression(lisp_list):
         s_expression.args = inner_s_expressions
     else:
         while len(args) > 0:
-            # убрать скобки у например (t)
             if len(args) >= 3 and args[0] == '(' and (not args[1] in functions) and args[2] == ')':
                 args.pop(0)
                 args.pop(1)
 
-            # lisp atom
             if args[0] != '(':
                 cur_term = args.pop(0)
 
@@ -114,7 +111,6 @@ def convert_list_to_s_expression(lisp_list):
                     cur_term = False
 
                 s_expression.args.append(cur_term)
-            # lisp list
             else:
                 inner_lisp_list, args = get_list_and_rest(args)
                 s_expression.args += convert_list_to_s_expression(inner_lisp_list)
@@ -159,8 +155,7 @@ def read(code):
     for lisp_list in lisp_lists:
         s_expressions_from_lisp_list = convert_list_to_s_expression(lisp_list)
         s_expressions += s_expressions_from_lisp_list
-        #  for exp in s_expressions_from_lisp_list:
-        #    print(exp)
+
 
     return s_expressions
 
@@ -168,9 +163,3 @@ ans = read("(setq n 2520) (setq i 20) (while (> i 0) (if (= (% n i) 0) (setq i (
            "(if (!= (% n i) 0) (setq n (+ n 2520)) (setq x 0))"
            "(if (!= (% n i) 0) (setq i 20) (setq x 0))"
            "(if (= i 1) (print n) (setq x 0)))")
-print(ans)
-#if ans[0].operator:
-#    print(ans[0].operator)
-
-
-# ans = read(" (loop for i from 0 to 999 do( if( = ( mod i 3 ) 0 )( setq result ( + result i ) )( if( = ( mod i 5 ) 0 )( setq result ( + result i ) ))))")

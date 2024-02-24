@@ -17,13 +17,6 @@ last_op = ''
 reg_counter = 3
 history = []
 
-#    with open(filename, encoding="utf-8") as file:
-#        text_code = file.read()
-#     (setq y ( if ( > ( if ( > 4 5) 4 6) 5) 0 1))
-#     (defun array r y (setq x y)) (if ( > 4 5)(array 3 5) (setq x 5))
-#     (loop for i from 1 to 10 do(setq x 1))
-#     (setq hello \"Hello, world!\") (print hello)
-#     (setq x (read)) (print x)
 
 def translate(filename):
     global address_instr_mem, stack, history
