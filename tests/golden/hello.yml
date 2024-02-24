@@ -1,5 +1,6 @@
 source: |-
-  (setq hello "Hello, world!") (print hello)
+  (setq hello "Hello, world!") 
+  (print hello)
 
 output: |
   Output buffer: Hello, world! | ticks: 452 | amount_instr: 124

@@ -1,5 +1,8 @@
 source: |-
-  (setq welcome "What is your name?") (print welcome) (setq name (read)) (print name)
+  (setq welcome "What is your name?") 
+  (print welcome) 
+  (setq name (read)) 
+  (print name)
 
 output: |
   Output buffer: What is your name?Alice | ticks: 940 | amount_instr: 255

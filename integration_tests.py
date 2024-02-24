@@ -12,7 +12,7 @@ import machine
 import translator
 
 
-@pytest.mark.golden_test("tests/hello.yml")
+@pytest.mark.golden_test("tests/golden/hello.yml")
 def test_hello_program(golden, caplog):
     caplog.set_level(logging.DEBUG)
 
@@ -35,7 +35,7 @@ def test_hello_program(golden, caplog):
         # assert caplog.text == golden["log"]
 
 
-@pytest.mark.golden_test("tests/prob5.yml")
+@pytest.mark.golden_test("tests/golden/prob5.yml")
 def test_prob5_program(golden, caplog):
     caplog.set_level(logging.DEBUG)
 
@@ -58,7 +58,7 @@ def test_prob5_program(golden, caplog):
         # assert caplog.text == golden["log"]
 
 
-@pytest.mark.golden_test("tests/cat.yml")
+@pytest.mark.golden_test("tests/golden/cat.yml")
 def test_cat_program(golden, caplog):
     caplog.set_level(logging.DEBUG)
 
@@ -85,7 +85,7 @@ def test_cat_program(golden, caplog):
         # assert caplog.text == golden["log"]
 
 
-@pytest.mark.golden_test("tests/hello_user.yml")
+@pytest.mark.golden_test("tests/golden/hello_user.yml")
 def test_hello_user_program(golden, caplog):
     caplog.set_level(logging.DEBUG)
 

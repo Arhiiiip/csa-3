@@ -1,5 +1,6 @@
 source: |-
-  (setq var (read)) (print var)
+  (setq var (read))
+  (print var)
 
 
 code: |-
