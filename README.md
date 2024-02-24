@@ -51,18 +51,29 @@ empty ::=
 ### Пример
 ```lisp
 (setq welcome "What is your name?") 
-(print welcome) 
 (setq name (read)) 
+(print welcome) 
 (print name)
 ```
 
 ```lisp
 (setq n 2520) (setq i 20) (setq x 0) 
 (while (> i 0) 
-(if (= (% n i) 0) (setq x 1) (setq i (- i 1))) 
-(if (= x 1) (setq x 0) (setq i 20)) 
-(if (= i 20) (setq x 0) (setq n (+ n 2520))) 
-(if (= i 1) (setq x 0) (print n))
+  (if (= (% n i) 0)
+    (setq x 1) (setq i (- i 1))
+  )
+    
+  (if (= x 1)
+    (setq x 0) (setq i 20)
+  )
+    
+  (if (= i 20)
+    (setq x 0) (setq n (+ n 2520))
+  )
+    
+  (if (= i 1)
+    (setq x 0) (print n)
+  )
 )
 ```
 ## Организация памяти
