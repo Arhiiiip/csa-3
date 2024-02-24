@@ -6,20 +6,18 @@ address_data_mem = 0x0
 address_instr_mem = 0x0
 address2var = []
 address2method = []
-stack = []
 math_variables = ['+', '-', '/', '%', '*']
 if_variables = ['>', '<', '>=', '<=', '!=', '=']
 variables = set()
 variables_method = set()
 res_code = []
 jmp_stack = []
-last_op = ''
 reg_counter = 3
 history = []
 
 
 def translate(filename):
-    global address_instr_mem, stack, history
+    global address_instr_mem, history
 
     with open(filename, encoding="utf-8") as file:
         text_code = file.read()
