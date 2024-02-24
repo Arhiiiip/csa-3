@@ -173,12 +173,19 @@
     {
         "opcode": "ld",
         "arg1": "rx2",
-        "arg2": 0
+        "arg2": 38
+    },
+    {
+        "opcode": "input"
     },
     {
         "opcode": "ld",
         "arg1": "rx15",
-        "arg2": 46
+        "arg2": 39
+    },
+    {
+        "opcode": "dec",
+        "arg1": "rx2"
     },
     {
         "opcode": "ld",
@@ -186,13 +193,59 @@
         "arg2": "rx2"
     },
     {
-        "opcode": "je",
+        "opcode": "inc",
+        "arg1": "rx2"
+    },
+    {
+        "opcode": "ld",
+        "arg1": "rx5",
+        "arg2": 34
+    },
+    {
+        "opcode": "jne",
         "arg1": "rx4",
+        "arg2": "rx5"
+    },
+    {
+        "opcode": "dec",
+        "arg1": "rx2"
+    },
+    {
+        "opcode": "ld",
+        "arg1": "rx6",
+        "arg2": 0
+    },
+    {
+        "opcode": "wr",
+        "arg1": "rx6"
+    },
+    {
+        "opcode": "wr",
+        "arg1": "rx0"
+    },
+    {
+        "opcode": "ld",
+        "arg1": "rx2",
+        "arg2": 0
+    },
+    {
+        "opcode": "ld",
+        "arg1": "rx15",
+        "arg2": 58
+    },
+    {
+        "opcode": "ld",
+        "arg1": "rx7",
+        "arg2": "rx2"
+    },
+    {
+        "opcode": "je",
+        "arg1": "rx7",
         "arg2": "rx0"
     },
     {
         "opcode": "print",
-        "arg1": "rx4",
+        "arg1": "rx7",
         "arg2": 1
     },
     {
@@ -202,63 +255,10 @@
     {
         "opcode": "ld",
         "arg1": "rx15",
-        "arg2": 39
+        "arg2": 51
     },
     {
         "opcode": "jmp"
-    },
-    {
-        "opcode": "ld",
-        "arg1": "rx2",
-        "arg2": 38
-    },
-    {
-        "opcode": "input"
-    },
-    {
-        "opcode": "ld",
-        "arg1": "rx15",
-        "arg2": 47
-    },
-    {
-        "opcode": "dec",
-        "arg1": "rx2"
-    },
-    {
-        "opcode": "ld",
-        "arg1": "rx6",
-        "arg2": "rx2"
-    },
-    {
-        "opcode": "inc",
-        "arg1": "rx2"
-    },
-    {
-        "opcode": "ld",
-        "arg1": "rx7",
-        "arg2": 34
-    },
-    {
-        "opcode": "jne",
-        "arg1": "rx6",
-        "arg2": "rx7"
-    },
-    {
-        "opcode": "dec",
-        "arg1": "rx2"
-    },
-    {
-        "opcode": "ld",
-        "arg1": "rx8",
-        "arg2": 0
-    },
-    {
-        "opcode": "wr",
-        "arg1": "rx8"
-    },
-    {
-        "opcode": "wr",
-        "arg1": "rx0"
     },
     {
         "opcode": "ld",

@@ -68,11 +68,11 @@ empty ::=
 ## Организация памяти
 
 ### Instruction Memory
-![instMemory](./instMemory.png)
+![instMemory](./schemes/instMemory.svg)
 
 
 ### Data Memory
-![dataMemory](./dataMemory.png)
+![dataMemory](./schemes/dataMemory.svg)
 
 
 ## Процессор
@@ -82,16 +82,13 @@ empty ::=
 Интерфейс командной строки с запуском модуля: `python machine.py <target_file> <input_file>`
 
 ### Модель процессора
-![Processor](./machine.png)
+![Processor](./schemes/Machine2.svg)
 
 Управляющие сигналы:
 * Sel(rx1)  - выставить значение регистра rx1
   * 1 - увеличить на 1
   * 0 - загрузить значение из вне
-* Sel(rx2) - выставить значение регистра rx2
-  * 1 - увеличить на 1
-  * 0 - загрузить значние из вне
-* Sel(reg) - загрузить значение в указанный регистр
+
 
 ### Организация памяти
 

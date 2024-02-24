@@ -1,1 +1,1 @@
-(setq welcome "What is your name?") (print welcome) (setq name (read)) (print name)
+(setq welcome "What is your name?") (setq name (read)) (print welcome) (print name)
